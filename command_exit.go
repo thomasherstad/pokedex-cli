@@ -3,7 +3,7 @@ package main
 import "os"
 
 
-func commandExit(commands map[string]cliCommand) error {
+func commandExit() error {
 	os.Exit(0)
 	return nil
 }

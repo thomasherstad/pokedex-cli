@@ -14,7 +14,7 @@ type command interface {
 type cliCommand struct{
 	name string
 	description string
-	callback func(map[string]cliCommand) error
+	callback func() error
 }
 
 
@@ -29,6 +29,16 @@ func makeCommands() map[string]cliCommand {
 			name: "exit",
 			description: "Close the program",
 			callback: commandExit,
+		},
+		"map": {
+			name: "map",
+			description: "Displays the next 20 locations in the Pokemon world",
+			callback: commandMap,
+		},
+		"mapb": {
+			name: "mapb",
+			description: "Displays the previous 20 locations in the Pokemon world",
+			callback: commandMapb,
 		},
 	}
 }
@@ -54,7 +64,7 @@ func startRepl(){
 
 		command, ok := commands[text]
 		if ok {
-			command.callback(commands)
+			command.callback()
 		}
 	}
 }

@@ -15,8 +15,8 @@ func commandMap(cfg *config) error {
 	if err != nil {
 		return err
 	}
-	cfg.nextLocation = locations.Next
-	cfg.previousLocation = locations.Previous
+	cfg.nextLocation = &locations.Next
+	cfg.previousLocation = &locations.Previous
 
 	for _, loc := range locations.Locations {
 		fmt.Println(loc.Name)
@@ -30,8 +30,8 @@ func commandMapb(cfg *config) error {
 	if err != nil {
 		return err
 	}
-	cfg.nextLocation = locations.Next
-	cfg.previousLocation = locations.Previous
+	cfg.nextLocation = &locations.Next
+	cfg.previousLocation = &locations.Previous
 
 	for _, loc := range locations.Locations {
 		fmt.Println(loc.Name)

@@ -20,7 +20,11 @@ type mapResults struct {
 	} `json:"results"`
 }
 
-func GetLocations(url string) (mapResults, error) {
+func GetLocations(pageURL *string) (mapResults, error) {
+	url := baseURL + "/location/"
+	if pageURL != nil {
+		url = *pageURL
+	}
 
 	resp, err := http.Get(url)
 	if err != nil {

@@ -41,13 +41,8 @@ func makeCommands() map[string]cliCommand {
 	}
 }
 
-func startRepl() {
+func startRepl(cfg *config) {
 	commands := makeCommands()
-
-	cfg := config{
-		nextLocation:     "https://pokeapi.co/api/v2/location/",
-		previousLocation: "",
-	}
 
 	for {
 		scanner := bufio.NewScanner(os.Stdin)
@@ -65,7 +60,7 @@ func startRepl() {
 
 		command, ok := commands[text]
 		if ok {
-			command.callback(&cfg)
+			command.callback(cfg)
 		}
 	}
 }

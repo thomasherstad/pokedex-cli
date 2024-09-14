@@ -21,7 +21,7 @@ type mapResults struct {
 }
 
 func GetLocations(pageURL *string) (mapResults, error) {
-	url := baseURL + "/location/"
+	url := baseURL + "/location-area/"
 	if pageURL != nil {
 		url = *pageURL
 	}

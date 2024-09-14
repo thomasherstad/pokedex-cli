@@ -1,52 +1,53 @@
 package main
 
-
 import (
-	"fmt";
-	"bufio";
-	"os";
+	"bufio"
+	"fmt"
+	"os"
 )
 
 type command interface {
-	Action() 
+	Action()
 }
 
-type cliCommand struct{
-	name string
+type cliCommand struct {
+	name        string
 	description string
-	callback func() error
+	callback    func(cgf *config) error
 }
-
 
 func makeCommands() map[string]cliCommand {
 	return map[string]cliCommand{
 		"help": {
-			name: "help",
+			name:        "help",
 			description: "Lists commands and tells you how to use the program",
-			callback: commandHelp,
+			callback:    commandHelp,
 		},
 		"exit": {
-			name: "exit",
+			name:        "exit",
 			description: "Close the program",
-			callback: commandExit,
+			callback:    commandExit,
 		},
 		"map": {
-			name: "map",
+			name:        "map",
 			description: "Displays the next 20 locations in the Pokemon world",
-			callback: commandMap,
+			callback:    commandMap,
 		},
 		"mapb": {
-			name: "mapb",
+			name:        "mapb",
 			description: "Displays the previous 20 locations in the Pokemon world",
-			callback: commandMapb,
+			callback:    commandMapb,
 		},
 	}
 }
 
-
-
-func startRepl(){
+func startRepl() {
 	commands := makeCommands()
+
+	cfg := config{
+		nextLocation:     "https://pokeapi.co/api/v2/location/",
+		previousLocation: "",
+	}
 
 	for {
 		scanner := bufio.NewScanner(os.Stdin)
@@ -57,14 +58,14 @@ func startRepl(){
 		if len(text) == 0 {
 			continue
 		}
-		
+
 		if text == "exit" {
 			return
 		}
 
 		command, ok := commands[text]
 		if ok {
-			command.callback()
+			command.callback(&cfg)
 		}
 	}
 }

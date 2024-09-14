@@ -11,9 +11,9 @@ import (
 )
 
 type mapResults struct {
-	Count     int    `json:"count"`
-	Next      string `json:"next"`
-	Previous  string `json:"previous"`
+	Count     int     `json:"count"`
+	Next      *string `json:"next"`
+	Previous  *string `json:"previous"`
 	Locations []struct {
 		Name string `json:"name"`
 		Url  string `json:"url"`

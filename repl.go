@@ -6,14 +6,10 @@ import (
 	"os"
 )
 
-type command interface {
-	Action()
-}
-
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(cgf *config) error
+	callback    func(*config) error
 }
 
 func makeCommands() map[string]cliCommand {
@@ -31,7 +27,7 @@ func makeCommands() map[string]cliCommand {
 		"map": {
 			name:        "map",
 			description: "Displays the next 20 locations in the Pokemon world",
-			callback:    commandMap,
+			callback:    commandMapf,
 		},
 		"mapb": {
 			name:        "mapb",

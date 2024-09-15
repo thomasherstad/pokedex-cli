@@ -2,11 +2,11 @@ package main
 
 import (
 	"fmt"
-	"pokedex-cli/internal/pokeapi"
 )
 
 func commandMapf(cfg *config) error {
-	locations, err := pokeapi.GetLocations(cfg.nextLocation)
+
+	locations, err := cfg.pokeapiClient.GetLocations(cfg.nextLocation)
 	if err != nil {
 		return err
 	}
@@ -26,7 +26,7 @@ func commandMapb(cfg *config) error {
 		return nil
 	}
 
-	locations, err := pokeapi.GetLocations(cfg.previousLocation)
+	locations, err := cfg.pokeapiClient.GetLocations(cfg.previousLocation)
 	if err != nil {
 		return err
 	}

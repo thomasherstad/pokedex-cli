@@ -20,10 +20,19 @@ type mapResults struct {
 	} `json:"results"`
 }
 
-func GetLocations(pageURL *string) (mapResults, error) {
+func (c Client) GetLocations(pageURL *string) (mapResults, error) {
 	url := baseURL + "/location-area/"
 	if pageURL != nil {
 		url = *pageURL
+	}
+
+	if val, ok := c.cache.Get(url); ok {
+		locationResponse := mapResults{}
+		err := json.Unmarshal(val, &locationResponse)
+		if err != nil {
+			return mapResults{}, err
+		}
+		return locationResponse, nil
 	}
 
 	resp, err := http.Get(url)
@@ -46,6 +55,8 @@ func GetLocations(pageURL *string) (mapResults, error) {
 	if err != nil {
 		fmt.Println(err)
 	}
+
+	c.cache.Add(url, body)
 
 	return locations, nil
 }

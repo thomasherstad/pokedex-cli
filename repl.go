@@ -39,7 +39,6 @@ func makeCommands() map[string]cliCommand {
 
 func startRepl(cfg *config) {
 	commands := makeCommands()
-
 	for {
 		scanner := bufio.NewScanner(os.Stdin)
 		fmt.Printf("pokedex > ")

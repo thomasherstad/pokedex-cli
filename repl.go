@@ -10,7 +10,7 @@ import (
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(*config, string) error
+	callback    func(*config, ...string) error
 }
 
 func makeCommands() map[string]cliCommand {
@@ -37,10 +37,15 @@ func makeCommands() map[string]cliCommand {
 		},
 		"explore": {
 			name:        "explore",
-			description: "explore different areas",
+			description: "Explore which Pokemon are in the chosen area",
 			callback:    explore,
 		},
 	}
+}
+
+func cleanInput(text string) []string {
+	lower := strings.ToLower(text)
+	return strings.Fields(lower)
 }
 
 func startRepl(cfg *config) {
@@ -55,18 +60,17 @@ func startRepl(cfg *config) {
 			continue
 		}
 
-		inputs := strings.Split(text, " ")
-		commandName := inputs[0]
-		var parameter string
-		if len(inputs) == 2 {
-			parameter = inputs[1]
-		} else if len(inputs) > 2 {
-			continue
+		words := cleanInput(text)
+
+		commandName := words[0]
+		var args []string
+		if len(words) > 1 {
+			args = words[1:]
 		}
 
 		command, ok := commands[commandName]
 		if ok {
-			command.callback(cfg, parameter)
+			command.callback(cfg, args...)
 		}
 	}
 }

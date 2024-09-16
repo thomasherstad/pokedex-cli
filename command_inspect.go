@@ -26,10 +26,10 @@ func printInspection(p pokeapi.Pokemon) {
 	fmt.Println("Stats: ")
 	//Stats loop
 	for _, stat := range p.Stats {
-		fmt.Printf("	- %s: %v\n", stat.Stat.Name, stat.BaseStat)
+		fmt.Printf("- %s: %v\n", stat.Stat.Name, stat.BaseStat)
 	}
 	fmt.Println("Types: ")
 	for _, t := range p.Types {
-		fmt.Printf("	- %s\n", t.Type.Name)
+		fmt.Printf("- %s\n", t.Type.Name)
 	}
 }

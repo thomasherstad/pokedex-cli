@@ -22,7 +22,7 @@ func catch(cfg *config, args ...string) error {
 		return err
 	}
 
-	fmt.Printf("Tried to catch %s\n", pokemon.Name)
+	fmt.Printf("Throwing pokeball at %s...\n", pokemon.Name)
 
 	// Chance of catching
 	chance := rand.Float32()
@@ -30,12 +30,10 @@ func catch(cfg *config, args ...string) error {
 	maxBaseExperience := 390
 	normalizedExperience := float32(pokemon.BaseExperience) / float32(maxBaseExperience)
 
-	fmt.Println(chance)
-	fmt.Println(normalizedExperience)
 	if chance >= normalizedExperience {
-		fmt.Printf("%s was caught!\n", pokemon.Name)
+		fmt.Printf("%s was caught! ", pokemon.Name)
 		cfg.caughtPokemon[pokemon.Name] = pokemon
-		fmt.Println("Added to pokedex")
+		fmt.Println("Added to pokedex.")
 	} else {
 		fmt.Printf("%s escaped!\n", pokemon.Name)
 	}

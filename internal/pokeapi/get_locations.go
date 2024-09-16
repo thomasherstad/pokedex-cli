@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"io"
 
-	"log"
-
 	"net/http"
 )
 
@@ -35,18 +33,19 @@ func (c Client) GetLocations(pageURL *string) (mapResults, error) {
 		return locationResponse, nil
 	}
 
-	resp, err := http.Get(url)
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return mapResults{}, err
+	}
+
+	resp, err := c.httpClient.Do(req)
 	if err != nil {
 		return mapResults{}, err
 	}
 	defer resp.Body.Close()
 
 	body, err := io.ReadAll(resp.Body)
-	if resp.StatusCode > 299 {
-		log.Fatalf("Response failed with error code %d\n and body %s\n", resp.StatusCode, resp.Body)
-	}
 	if err != nil {
-		fmt.Println(err)
 		return mapResults{}, err
 	}
 

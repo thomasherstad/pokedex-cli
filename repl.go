@@ -4,12 +4,13 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 )
 
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(*config) error
+	callback    func(*config, string) error
 }
 
 func makeCommands() map[string]cliCommand {
@@ -34,6 +35,11 @@ func makeCommands() map[string]cliCommand {
 			description: "Displays the previous 20 locations in the Pokemon world",
 			callback:    commandMapb,
 		},
+		"explore": {
+			name:        "explore",
+			description: "explore different areas",
+			callback:    explore,
+		},
 	}
 }
 
@@ -49,13 +55,18 @@ func startRepl(cfg *config) {
 			continue
 		}
 
-		if text == "exit" {
-			return
+		inputs := strings.Split(text, " ")
+		commandName := inputs[0]
+		var parameter string
+		if len(inputs) == 2 {
+			parameter = inputs[1]
+		} else if len(inputs) > 2 {
+			continue
 		}
 
-		command, ok := commands[text]
+		command, ok := commands[commandName]
 		if ok {
-			command.callback(cfg)
+			command.callback(cfg, parameter)
 		}
 	}
 }
